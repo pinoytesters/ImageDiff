@@ -6,23 +6,23 @@ IMAGE_PATH = "images/"
 
 def process(baseline_file, file_name):
     baseline = Image.open(baseline_file).convert('RGB') 
-    chrome_file = IMAGE_PATH + "chrome-" + file_name
-    firefox_file = IMAGE_PATH + "firefox-" + file_name
-    edge_file = IMAGE_PATH + "edge-" + file_name
+    chrome_file = IMAGE_PATH + file_name + "-chrome.png" 
+    firefox_file = IMAGE_PATH + file_name + "-firefox.png" 
+    edge_file = IMAGE_PATH + file_name + "-edge.png"
     
     screenshot_name = file_name.split(".")[0]
     if os.path.isfile(chrome_file):
         print("Processing C")
         # compare(IMAGE_PATH + file, chrome_file, baseline, "chrome")
-        compare(baseline, chrome_file, f"chrome-{screenshot_name}")
+        compare(baseline, chrome_file, f"{screenshot_name}-chrome")
     if os.path.isfile(firefox_file):
         print("Processing F")
         # compare(IMAGE_PATH + file, firefox_file, baseline, "firefox") 
-        compare(baseline, firefox_file, f"firefox-{screenshot_name}") 
+        compare(baseline, firefox_file, f"{screenshot_name}-firefox") 
     if os.path.isfile(edge_file):
         print("Processing E")
         # compare(IMAGE_PATH + file, edge_file, baseline, "edge")
-        compare(baseline, edge_file, f"edge-{screenshot_name}") 
+        compare(baseline, edge_file, f"{screenshot_name}-edge") 
 
 def compare(baseline, browser_image, browser_and_screen):
     comparison = Image.open(browser_image).convert('RGB') 
@@ -42,6 +42,6 @@ def compare(baseline, browser_image, browser_and_screen):
 
 for path, Directory, files in os.walk(IMAGE_PATH):
     for file in files:
-        if file.startswith("zeplin-"):
-            file_name = file.split("zeplin-")[1]
+        if file.endswith("-zeplin.png"):
+            file_name = file.split("-zeplin.png")[0]
             process(IMAGE_PATH + file, file_name)
